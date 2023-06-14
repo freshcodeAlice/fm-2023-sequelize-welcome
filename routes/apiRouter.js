@@ -5,6 +5,7 @@ const apiRouter = express.Router();
 
 apiRouter.post('/users/', UserController.createOne);
 apiRouter.get('/users/:id', UserController.findOne);
+apiRouter.get('/users/', UserController.findAll);
 
 module.exports = apiRouter;
 

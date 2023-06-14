@@ -20,3 +20,12 @@ module.exports.findOne = async (req, res, next) => {
         next(error)
     }
 }
+
+module.exports.findAll = async (req, res, next) => {
+    try {
+        const foundedUsers = await User.findAll();
+        res.status(200).send(foundedUsers);
+    } catch(error) {
+        next(error)
+    }
+}
