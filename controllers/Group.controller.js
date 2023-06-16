@@ -61,9 +61,17 @@ module.exports.getGroupWithUsers = async (req, res, next) => {
     }
 }
 
+
+
 module.exports.removeUserFromGroup = async (req, res, next) => {
     try{
-
+        const {params: {userId, groupId}}= req;
+        const groupInstance = await Group.findByPk(groupId);
+        const userInstance = await User.findByPk(userId);
+        await groupInstance.removeUser(userInstance);
+        res.status(200).send({meta: {
+            userRemoved: userId
+        }});
     } catch(error) {
         next(error)
     }

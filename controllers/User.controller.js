@@ -1,4 +1,4 @@
-const {User} = require('../models');
+const {User, Group} = require('../models');
 const createError = require('http-errors');
 
 module.exports.createOne = async (req, res, next) => {
@@ -129,3 +129,27 @@ module.exports.deleteOne = async (req, res, next) => {
 }
 
 */
+
+
+
+/// Зробити метод юзеру getUserWithGroups
+
+module.exports.getUserWithGroups = async (req, res, next) => {
+    try {
+        const {params: {userId}} = req;
+        const userWithGroups = await User.findAll({
+            where: {
+                id: userId
+            },
+            include: [{
+                model: Group
+            }],
+            attributes: {
+                exclude: ['password']
+            }
+        });
+        res.status(200).send({data: userWithGroups})
+    } catch(error) {
+        next(error)
+    }
+}

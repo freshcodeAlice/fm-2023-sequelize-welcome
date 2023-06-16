@@ -8,6 +8,7 @@ userRouter.get('/:id', UserController.findOne);
 userRouter.get('/', pagination, UserController.findAll);
 userRouter.put('/:id', UserController.updateOne);
 userRouter.delete('/:id', UserController.deleteOne);
+userRouter.get('/:userId/groups', UserController.getUserWithGroups);
 
 
 module.exports = userRouter;
