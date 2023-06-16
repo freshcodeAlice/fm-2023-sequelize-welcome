@@ -43,7 +43,19 @@ module.exports.countUserInGroup = async (req, res, next) => {
 
 module.exports.getGroupWithUsers = async (req, res, next) => {
     try{
-
+        const {params: {groupId}} = req;
+        const groupWithMembers = await Group.findAll({
+            where: {
+                id: groupId
+            },
+            include: [{
+                model: User,
+                attributes: {
+                    exclude: ['password']
+                }
+            }]
+        });
+        res.status(200).send({data: groupWithMembers})
     } catch(error) {
         next(error)
     }

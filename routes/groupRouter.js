@@ -8,6 +8,6 @@ const groupRouter = express.Router();
 groupRouter.post('/', GroupController.createGroup);
 groupRouter.put('/:groupId/:userId', GroupController.addUserToGroup);
 groupRouter.get('/:groupId/count', GroupController.countUserInGroup);
-
+groupRouter.get('/:groupId', GroupController.getGroupWithUsers);
 
 module.exports = groupRouter;
