@@ -1,17 +1,9 @@
 const express = require('express');
-const UserController = require('../controllers/User.controller');
-const TaskController = require('../controllers/Task.controller');
-const {pagination} = require('../middleware/pagination.mw');
+const taskRouter = require('./taskRouter');
+const userRouter = require('./userRouter');
 const apiRouter = express.Router();
 
-apiRouter.post('/users/', UserController.createOne);
-apiRouter.get('/users/:id', UserController.findOne);
-apiRouter.get('/users/', pagination, UserController.findAll);
-apiRouter.put('/users/:id', UserController.updateOne);
-apiRouter.delete('/users/:id', UserController.deleteOne);
+apiRouter.use('/users', userRouter);
+apiRouter.use('/tasks', taskRouter);
 
-apiRouter.post('/tasks/', TaskController.createOne);
-apiRouter.get('/tasks/:id', TaskController.getAllUserTasks);
-apiRouter.get('/tasks/:id/count', TaskController.getUserTaskCount);
-apiRouter.delete('/tasks/:userId/:taskId', TaskController.deleteTask);
 module.exports = apiRouter;
