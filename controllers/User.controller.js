@@ -21,9 +21,23 @@ module.exports.findOne = async (req, res, next) => {
     }
 }
 
+/*
+Пагінація:
+limit - кількість результатів на отримання з бази
+offset - відступ по кількості від початку
+
+*/
+
 module.exports.findAll = async (req, res, next) => {
     try {
-        const foundedUsers = await User.findAll();
+       /// очікуємо, що у нас є готовий об'єкт пагінації
+       const {pagination} = req;
+        const foundedUsers = await User.findAll({
+            attributes: {
+                exclude: ['password']
+            },
+           ...pagination
+        });
         res.status(200).send({data: foundedUsers});
     } catch(error) {
         next(error)

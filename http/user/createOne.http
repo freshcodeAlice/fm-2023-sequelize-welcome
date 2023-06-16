@@ -1,10 +1,10 @@
-POST http://localhost:3000/api/users/ HTTP/1.1
+POST http://localhost:5000/api/users/ HTTP/1.1
 Content-Type: application/json
 
 {
-    "firstName": "Jane",
-    "lastName": "Doe",
-    "email": "doesfdsfdfsdfxcsdaeqwe@doe",
+    "firstName": "Key",
+    "lastName": "Noe",
+    "email": "noe@doe",
     "password": "123123123",
     "gender": "male",
     "birthday": "2021-01-01"

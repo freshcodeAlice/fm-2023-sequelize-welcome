@@ -34,20 +34,18 @@ module.exports.getAllUserTasks = async(req, res, next) => {
     }
     }
 
-/*
-Додати update таски та видалення
 
-*/
 
 module.exports.deleteTask = async (req, res, next) => {
     try {
         const {params: {userId, taskId}} = req;
-        const userInstance = await User.findByPk(userId);
+      //  const userInstance = await User.findByPk(userId); -- user може знадобитись для перевірки прав на видалення 
         const task = await Task.findByPk(taskId);
-       const result =  await userInstance.removeTask(task); /// Error! Порушуються констрейнти
-       /* Причина в тому, що метод removeTask не видаляє таску, а оновлює (update), встановлючи зв'язок з батьківською моделлю в NULL
-       Якщо в стовпці NOT NULL -> порушення констрейнту */
-       res.status(200).send({data: result});
+        if (!task) {
+           return res.status(404).send('Task not found')
+        }
+      const result = await task.destroy();
+       res.status(204).send();
     } catch(error) {
         next(error)
     }
