@@ -50,3 +50,22 @@ module.exports.deleteTask = async (req, res, next) => {
         next(error)
     }
 }
+
+
+/*
+написати роут, який приймає userId і повертає кількість тасок, яка у цього юзера є
+
+*/
+
+module.exports.getUserTaskCount = async(req, res, next) => {
+    try {
+        const {params: {id}} = req;
+        const userInstance = await User.findByPk(id);
+        const count = await userInstance.countTasks();
+        res.status(200).send({data: {
+            count
+        }})
+    } catch(error) {
+        next(error)
+    }
+}
