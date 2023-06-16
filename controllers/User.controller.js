@@ -1,4 +1,5 @@
 const {User} = require('../models');
+const createError = require('http-errors');
 
 module.exports.createOne = async (req, res, next) => {
     try {
@@ -15,6 +16,10 @@ module.exports.findOne = async (req, res, next) => {
     try {
         const {params: {id}} = req;
         const foundedUser = await User.findByPk(id);
+        if (!foundedUser) {
+            const error = createError(404, 'User not found');
+            return next(error);
+        }
         res.status(200).send({data: foundedUser});
     } catch(error) {
         next(error)

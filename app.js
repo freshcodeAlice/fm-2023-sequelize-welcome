@@ -9,7 +9,8 @@ app.use('/api', apiRouter);
 
 
 app.use(function (err, req, res, next) {
-    res.status(500).send({errors: err})
+    const status = err.status || 500;
+    res.status(status).send({errors: err.message || 'Server error'})
 });
 
 module.exports = app;
