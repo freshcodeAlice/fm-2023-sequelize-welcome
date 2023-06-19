@@ -92,3 +92,38 @@ module.exports.deleteGroup = async (req, res, next) => {
         next(error)
     }
 }
+
+module.exports.createImage = async (req, res, next) => {
+    try {
+        const {file: {filename}, params: {groupId}} = req;
+        const [rowCount, updatedGroup] = await Group.update({
+            imagePath: filename
+        }, {
+            where: {
+                id: groupId
+            },
+            returning: true
+        });
+        res.status(200).send({data: updatedGroup});
+
+    } catch(error) {
+        next(error)
+    }
+}
+
+
+/*
+
+
+{
+  fieldname: 'groupAvatar',
+  originalname: '1672431927_flomaster-club-p-lastochka-shablon-dlya-virezaniya-oboi-6.jpg',
+  encoding: '7bit',
+  mimetype: 'image/jpeg',
+  destination: '/home/freshcodealice/Стільниця/ALICE/onl-js-3 (fm)/fm-2023-sequelize-welcome/public/images',
+  filename: '1687162994095.1672431927_flomaster-club-p-lastochka-shablon-dlya-virezaniya-oboi-6.jpg',
+  path: '/home/freshcodealice/Стільниця/ALICE/onl-js-3 (fm)/fm-2023-sequelize-welcome/public/images/1687162994095.1672431927_flomaster-club-p-lastochka-shablon-dlya-virezaniya-oboi-6.jpg',
+  size: 57239
+}
+
+*/
