@@ -6,6 +6,7 @@ const app = express();
 
 app.use(bodyParser);
 app.use('/api', apiRouter);
+app.use(express.static('public/images'));
 
 
 app.use(function (err, req, res, next) {
